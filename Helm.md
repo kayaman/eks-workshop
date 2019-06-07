@@ -109,6 +109,8 @@ name: eksdemo
 version: 0.1.0
 EoF
 ```
+
+Check https://eksworkshop.com/helm_root/helm_micro/customize/ for substitutions needed on the templates below:
 ```
 # Create subfolders for each template type
 mkdir -p environment/eksdemo/templates/deployment
@@ -126,3 +128,64 @@ cp environment/ecsdemo-crystal/kubernetes/service.yaml environment/eksdemo/templ
 cp environment/ecsdemo-nodejs/kubernetes/deployment.yaml environment/eksdemo/templates/deployment/nodejs.yaml
 cp environment/ecsdemo-nodejs/kubernetes/service.yaml environment/eksdemo/templates/service/nodejs.yaml
 ```
+
+```
+cat <<EoF > environment/eksdemo/values.yaml
+# Default values for eksdemo.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Release-wide Values
+replicas: 3
+version: 'latest'
+
+# Service Specific Values
+nodejs:
+  image: brentley/ecsdemo-nodejs
+crystal:
+  image: brentley/ecsdemo-crystal
+frontend:
+  image: brentley/ecsdemo-frontend
+EoF
+```
+
+### Use the dry-run flag to test our templates
+
+```
+helm install --debug --dry-run --name workshop environment/eksdemo
+```
+
+## Deploy the chart
+
+```
+helm install --name workshop environment/eksdemo
+```
+
+```
+kubectl get svc ecsdemo-frontend -o jsonpath="{.status.loadBalancer.ingress[*].hostname}"; echo
+```
+
+### Optional
+
+```
+# break the image name and upgrade
+helm upgrade workshop environment/eksdemo
+
+# check 
+helm status workshop
+
+# rollback the failed upgrade
+helm history workshop
+
+# rollback to the 1st revision
+helm rollback workshop 1
+
+helm status workshop
+```
+
+## Clean up
+
+```
+helm del --purge workshop
+```
+
