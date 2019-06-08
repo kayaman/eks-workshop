@@ -56,6 +56,51 @@ kubectl get hpa -w
 
 ## Cluster Autoscaler (CA)
 
+### Deploy a sample app
+
+```
+cat <<EoF> environment/cluster-autoscaler/nginx.yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-to-scaleout
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: nginx
+        app: nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx-to-scaleout
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 500m
+            memory: 512Mi
+EoF
+```
+
+```
+kubectl apply -f ~/environment/cluster-autoscaler/nginx.yaml
+kubectl get deployment/nginx-to-scaleout
+```
+
+### Scale the ReplicaSet
+
+```
+kubectl scale --replicas=10 deployment/nginx-to-scaleout
+```
+
+Watch:
+```
+kubectl logs -f deployment/cluster-autoscaler -n kube-system
+```
+
 ### Configure the Cluster Autoscaler (CA)
 
 ```
@@ -65,6 +110,8 @@ wget https://eksworkshop.com/scaling/deploy_ca.files/cluster_autoscaler.yml
 ```
 
 ### Configure the ASG
+
+Get the ASG name from the Aws Management Console. Change `Min` and `Max` values.
 
 ### Configure the Cluster Autoscaler
 
@@ -128,6 +175,41 @@ kubectl logs -f deployment/cluster-autoscaler -n kube-system
 
 ### Deploy a Sample App
 
+```
+cat <<EoF> environment/cluster-autoscaler/nginx.yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-to-scaleout
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: nginx
+        app: nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx-to-scaleout
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 500m
+            memory: 512Mi
+EoF
+```
+
+```
+kubectl apply -f environment/cluster-autoscaler/nginx.yaml
+```
+
+```
+kubectl get deployment/nginx-to-scaleout
+```
+
 ### Scale our ReplicaSet
 
 ```
@@ -170,5 +252,4 @@ kubectl delete -f environment/cluster-autoscaler/cluster_autoscaler.yml
 kubectl delete -f environment/cluster-autoscaler/nginx.yaml
 kubectl delete hpa,svc php-apache
 kubectl delete deployment php-apache load-generator
-rm -rf environment/cluster-autoscaler
 ```

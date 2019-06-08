@@ -13,7 +13,7 @@ https://eksworkshop.com for the impatient!
 9. [Argo]
 10. [Security]
 11. [Logging](Logging.md)
-12. [Monitoring]
+12. [Monitoring](Monitoring.md)
 13. [Istio]
 14. [Pods2Nodes]
 15. [AppMesh]
