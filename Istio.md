@@ -220,6 +220,12 @@ kubectl -n istio-system get svc grafana
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=grafana -o jsonpath='{.items[0].metadata.name}') 8080:3000 &
 ```
 
+Delight yourself with the Grafana UI:
+```
+open http://localhost:8080/dashboard/db/istio-mesh-dashboard/
+```
+
+Generate traffic:
 ```
 export SMHOST=$(kubectl get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].hostname} ' -n istio-system)
 
