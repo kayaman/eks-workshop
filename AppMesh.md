@@ -120,7 +120,7 @@ They can be deployed in three different ways:
 
 1. Before the "deployment", modifying the deployment's specs to include the sidecar. When deployed, the sidecar will run.
 2. After the deployment, patching the container specs to include the sidecar specs. Old pods will be torn down, and the new ones would come up with the sidecar.
-3. Through an Injector Controller, this way all subsequent deployments will come up with the sidecar automatically. This is not only quicker in the long run, but reduces chances of errors (typos, etc) and allow standardization.
+3. Through an Injector Controller, this way all subsequent deployments will come up with the sidecar automatically. This in not only quicker in the long run, but reduces chances of errors (typos, etc) and allow standardization.
 
 
 
@@ -128,4 +128,4 @@ They can be deployed in three different ways:
 ## Porting DJ app to App Mesh
 
 
-## Cleanup
+## Cleanuo
