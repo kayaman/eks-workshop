@@ -71,6 +71,7 @@ kubectl get pod,svc
 ```
 kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
 ```
+```
 kubectl get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' -n istio-system ; echo
 ```
 
