@@ -16,4 +16,4 @@ https://eksworkshop.com for the impatient!
 12. [Monitoring](Monitoring.md)
 13. [Istio](Istio.md)
 14. [Pods2Nodes]
-15. [AppMesh]
+15. [AppMesh](AppMesh.md)
