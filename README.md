@@ -7,7 +7,7 @@ https://eksworkshop.com for the impatient!
 3. [Health checks](HealthChecks.md)
 4. [Autoscaling](Autoscaling.md)
 5. [Spot]
-6. [CodePipeline]
+6. [CodePipeline](CodePipeline.md)
 7. [Jenkins]
 8. [X-Ray]
 9. [Argo]
